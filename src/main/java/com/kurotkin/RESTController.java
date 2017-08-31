@@ -1,45 +1,54 @@
 package com.kurotkin;
 
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
+@RequestMapping("/api")
 public class RESTController {
     public static DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
-    @RequestMapping(value = "/", method = RequestMethod.GET,produces={MediaType.APPLICATION_XML_VALUE})
-    public StahlwilleList getAllEmployees() {
-        StahlwilleList list = new StahlwilleList();
-        System.out.println("Working...");
+    final SitesRepository sitesRepository;
 
-        for(int i = 1; i <= Main.num; i++) {
-            Stahlwille w = new Stahlwille(i, i, Main.torque, dateFormat.format(new Date()), Main.serno, Main.name);
-            list.getFasteners().add(w);
-        }
-        return list;
+    public RESTController(SitesRepository sitesRepository) {
+        this.sitesRepository = sitesRepository;
     }
 
-    @RequestMapping(value = "/get", method = RequestMethod.GET,produces={MediaType.APPLICATION_XML_VALUE})
-    public StahlwilleList getting(@RequestParam(value="num", required=false, defaultValue="12") String arg_0,
-                                  @RequestParam(value="torque", required=false, defaultValue="8.1") String arg_1,
-                                  @RequestParam(value="serno", required=false, defaultValue="0000000") String serno,
-                                  @RequestParam(value="name", required=false, defaultValue="") String name) {
-        int num = Integer.parseInt(arg_0);
-        double torque = Double.parseDouble(arg_1);
-        StahlwilleList list = new StahlwilleList();
-        for(int i = 1; i <= num; i++) {
-            Stahlwille w = new Stahlwille(i, i, torque, dateFormat.format(new Date()), serno, name);
-            list.getFasteners().add(w);
-        }
-        return list;
+    @GetMapping("/visits")
+    public Iterable<Site> getVisits() {
+        return sitesRepository.findAll();
     }
+
+//    @RequestMapping(value = "/", method = RequestMethod.GET,produces={MediaType.APPLICATION_XML_VALUE})
+//    public SiteList getAllEmployees() {
+//        SiteList list = new SiteList();
+//        System.out.println("Working...");
+//
+//        for(int i = 1; i <= Main.num; i++) {
+//            Site w = new Site(i, i, Main.torque, dateFormat.format(new Date()), Main.serno, Main.name);
+//            list.getFasteners().add(w);
+//        }
+//        return list;
+//    }
+//
+//    @RequestMapping(value = "/get", method = RequestMethod.GET,produces={MediaType.APPLICATION_XML_VALUE})
+//    public SiteList getting(@RequestParam(value="num", required=false, defaultValue="12") String arg_0,
+//                            @RequestParam(value="torque", required=false, defaultValue="8.1") String arg_1,
+//                            @RequestParam(value="serno", required=false, defaultValue="0000000") String serno,
+//                            @RequestParam(value="name", required=false, defaultValue="") String name) {
+//        int num = Integer.parseInt(arg_0);
+//        double torque = Double.parseDouble(arg_1);
+//        SiteList list = new SiteList();
+//        for(int i = 1; i <= num; i++) {
+//            Site w = new Site(i, i, torque, dateFormat.format(new Date()), serno, name);
+//            list.getFasteners().add(w);
+//        }
+//        return list;
+//    }
 
 //    @RequestMapping(value = "/employees")
 //    public EmployeeListVO getAllEmployees() {
