@@ -2,9 +2,11 @@ package com.kurotkin;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 @XmlRootElement(name = "Site")
@@ -12,7 +14,7 @@ import java.io.Serializable;
 public class Site implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @XmlElement
     private Long id;
 
@@ -28,13 +30,17 @@ public class Site implements Serializable {
     @XmlElement
     private String userID;
 
+    @XmlElement
+    private LocalDate date;
+
     public Site() {}
 
-    public Site(String url, int ageRelated, String type, String userID) {
+    public Site(String url, int ageRelated, String type, String userID, LocalDate date) {
         this.url = url;
         this.ageRelated = ageRelated;
         this.type = type;
         this.userID = userID;
+        this.date = date;
     }
 
     public Long getId() {
@@ -75,5 +81,13 @@ public class Site implements Serializable {
 
     public void setUserID(String userID) {
         this.userID = userID;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }

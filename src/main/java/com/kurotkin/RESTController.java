@@ -7,18 +7,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@RestController
-@RequestMapping("/api")
+//@RestController
+//@RequestMapping("/apiii")
 public class RESTController {
-    public static DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-
     final SitesRepository sitesRepository;
-
     public RESTController(SitesRepository sitesRepository) {
         this.sitesRepository = sitesRepository;
     }
 
-    @GetMapping("/visits")
+    //@GetMapping("/sites")
     public Iterable<Site> getVisits() {
         return sitesRepository.findAll();
     }
