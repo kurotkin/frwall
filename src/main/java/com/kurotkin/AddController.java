@@ -4,6 +4,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 @RestController
@@ -27,8 +30,18 @@ public class AddController {
     }
 
     @GetMapping("/sites")
-    public Iterable<Site> getVisits() {
+    public Iterable<Site> getSites() {
         return sitesRepository.findAll();
+    }
+
+    @GetMapping("/lite")
+    public List<String> getSitesLite() {
+        List<String> list = new ArrayList<>();
+        Iterator<Site> iter = sitesRepository.findAll().iterator();
+        while (iter.hasNext()){
+            list.add(iter.next().getUrl());
+        }
+        return list;
     }
 
 }
