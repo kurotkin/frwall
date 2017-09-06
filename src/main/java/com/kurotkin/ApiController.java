@@ -11,11 +11,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class AddController {
+public class ApiController {
     final SitesRepository sitesRepository;
+    final UsersRepository usersRepository;
 
-    public AddController(SitesRepository sitesRepository) {
+    public ApiController(SitesRepository sitesRepository, UsersRepository usersRepository) {
         this.sitesRepository = sitesRepository;
+        this.usersRepository = usersRepository;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET,produces={MediaType.APPLICATION_XML_VALUE})
@@ -32,6 +34,11 @@ public class AddController {
     @GetMapping("/sites")
     public Iterable<Site> getSites() {
         return sitesRepository.findAll();
+    }
+
+    @GetMapping("/users")
+    public Iterable<User> getUsers() {
+        return usersRepository.findAll();
     }
 
     @GetMapping("/lite")
