@@ -9,6 +9,14 @@
             document.querySelector('#sites').append(el);
         });
     });
+
+    fetch("/api/users").then(response => response.json()).then(users => {
+        users.forEach(user => {
+            const us = document.createElement('li');
+            us.innerText = user.url;
+            document.querySelector('#users').append(us);
+        });
+    });
 </script>
 
 <body>
@@ -19,5 +27,8 @@
 <br>
 <h3>Сайты:</h3>
 <ul id="sites"></ul>
+<br>
+<h3>Пользователи:</h3>
+<ul id="users"></ul>
 </body>
 </html>
