@@ -37,7 +37,7 @@ public class ApiController {
     }
 
     @GetMapping("/users")
-    public Iterable<User> getUsers() {
+    public Iterable<UserCurrent> getUsers() {
         return usersRepository.findAll();
     }
 

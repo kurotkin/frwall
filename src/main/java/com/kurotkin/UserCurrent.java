@@ -8,11 +8,12 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 @Entity
-@XmlRootElement(name = "User")
+@XmlRootElement(name = "UserCurrent")
 @XmlAccessorType(XmlAccessType.NONE)
-public class User {
+public class UserCurrent implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,10 +23,12 @@ public class User {
     @XmlElement
     private String userId;
 
-    public User() {
+
+
+    public UserCurrent() {
     }
 
-    public User(String userId) {
+    public UserCurrent(String userId) {
         this.userId = userId;
     }
 

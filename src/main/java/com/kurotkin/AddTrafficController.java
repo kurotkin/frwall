@@ -21,23 +21,23 @@ public class AddTrafficController {
         this.usersRepository = usersRepository;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET,produces={MediaType.APPLICATION_XML_VALUE})
-    public Point add(@RequestParam(value="userid", required=true) String userid,
+    @RequestMapping(value = "/add", method = RequestMethod.GET, produces={MediaType.APPLICATION_XML_VALUE})
+    public UserCurrent add(@RequestParam(value="userid", required=true) String userid,
                     @RequestParam(value="in", required=false, defaultValue="0") String inString,
-                    @RequestParam(value="out", required=false, defaultValue="n/a") String outString) {
+                    @RequestParam(value="out", required=false, defaultValue="0") String outString) {
         long in = Long.parseLong(inString);
         long out = Long.parseLong(outString);
+        String str = "user id = " + userid + " in = " + in + " out = " + out;
+        System.out.println(str);
 
-        InfluxDB influxDB = InfluxDBFactory.connect("http://10.0.0.1:8086", "root", "root");
+        InfluxDB influxDB = InfluxDBFactory.connect("http://:8086", "", "");
         influxDB.createDatabase("dbName");
 
-        BatchPoints batchPoints = BatchPoints
-                .database("dbName")
+        BatchPoints batchPoints = BatchPoints.database("dbName")
                 .retentionPolicy("autogen")
                 .consistency(InfluxDB.ConsistencyLevel.ALL)
                 .build();
-        Point point = Point
-                .measurement(userid)
+        Point point = Point.measurement(userid)
                 .time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
                 .addField("in", in)
                 .addField("out", out)
@@ -45,8 +45,8 @@ public class AddTrafficController {
         batchPoints.point(point);
 
         influxDB.write(batchPoints);
-        User user = new User(userid);
+        UserCurrent user = new UserCurrent(userid);
         usersRepository.save(user);
-        return point;
+        return user;
     }
 }

@@ -13,7 +13,7 @@
     fetch("/api/users").then(response => response.json()).then(users => {
         users.forEach(user => {
             const us = document.createElement('li');
-            us.innerText = user.url;
+            us.innerText = user.userId;
             document.querySelector('#users').append(us);
         });
     });
