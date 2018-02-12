@@ -47,6 +47,7 @@ public class Site implements Serializable {
         return id;
     }
 
+
     public void setId(Long id) {
         this.id = id;
     }
